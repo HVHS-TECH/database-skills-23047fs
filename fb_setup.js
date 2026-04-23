@@ -7,14 +7,16 @@
 // Input:  n/a
 // Return: n/a
 /**************************************************************/
+  // Your web app's Firebase configuration
   const firebaseConfig = {
-    apiKey: ,
-    authDomain: ,
-    databaseURL: ,
-    projectId: ,
-    storageBucket: ,
-    messagingSenderId:,
-    appId:
+    apiKey: "AIzaSyAYlME0VP3-c40U6MLzfNmNloXUkyvXTI8",
+    authDomain: "randompants-3ef2c.firebaseapp.com",
+    databaseURL: "https://randompants-3ef2c-default-rtdb.firebaseio.com",
+    projectId: "randompants-3ef2c",
+    storageBucket: "randompants-3ef2c.firebasestorage.app",
+    messagingSenderId: "463883863321",
+    appId: "1:463883863321:web:5875252fe8bd2666893188",
+    measurementId: "G-CVF16131QY"
   };
 
   // Initialize Firebase
