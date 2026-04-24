@@ -16,12 +16,20 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 // This uses the set() operation to write the key:value pair "message":"Hello World"
 // The ref('/') part tells the operation to write to the base level of the database "/"
 // This means it replaces the whole database with message:Hello World
+// Adds Ben and his data
 /**************************************************************/
-function helloWorld(){
+function userData(){
   console.log("Running helloWorld()")
   firebase.database().ref('/').set(
     {
-      message: 'Hello World!'
+      users: '01'
+    }
+  )
+  firebase.database().ref('users/01').set(
+    {
+      name: 'ben',
+      age: '102',
+      hair: 'yellow'
     }
   )
 }
