@@ -25,3 +25,17 @@ function helloWorld(){
     }
   )
 }
+
+/**************************************************************/
+// goodbyeWorld()
+// Demonstrate a minimal write to firebase
+// This function replaces the entire database with the message "Goodbye World"
+/**************************************************************/
+function goodbyeWorld(){
+  console.log("Running helloWorld()")
+  firebase.database().ref('/').set(
+    {
+      message: 'Goodbye World!'
+    }
+  )
+}
