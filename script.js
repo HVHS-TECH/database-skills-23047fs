@@ -22,14 +22,32 @@ function userData(){
   console.log("Running helloWorld()")
   firebase.database().ref('/').set(
     {
-      users: '01'
+      users: {
+        '01': '',
+        '02': '',
+        '03': ''
+      }
     }
   )
-  firebase.database().ref('users/01').set(
+  firebase.database().ref('/users/01').set(
     {
       name: 'ben',
-      age: '102',
+      age: 102,
       hair: 'yellow'
+    }
+  )
+  firebase.database().ref('/users/02').set(
+    {
+      name: 'jack',
+      age: 4,
+      hair: 'null'
+    }
+  )
+  firebase.database().ref('/users/03').set(
+    {
+      name: 'jo',
+      age: 52,
+      hair: 'black'
     }
   )
 }
