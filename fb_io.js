@@ -24,6 +24,6 @@ function fb_readError(error) {
 // This function is called if listener called and does a console.log
 /**************************************************************/
 function fb_logDatabaseRead() {
-    console.log("There was a change")
+    console.log("There was a change");
 }
 
