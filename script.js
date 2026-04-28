@@ -43,17 +43,44 @@ function simpleWrite(){
   );
 }
 
+/**************************************************************/
+// simpleRead()
+// Demonstrate a minimal read to firebase
+// This function reads a message
+/**************************************************************/
 function simpleRead() {
   console.log("Reading message");
   //Reading from '' then doing function displayRead
-  firebase.database().ref('/users/02/name').once('value', displayRead);
+  firebase.database().ref('/users/02/name').once('value', displayRead, fb_readError);
   console.log("Leaving simpleRead");
 }
 
+/**************************************************************/
+// displayRead()
+// Demonstrate a minimal read to firebase
+// This function reads a message then tells user in console
+/**************************************************************/
 function displayRead(snapshot) {
-  console.log("Running displayRead(), the message is: " + snapshot.val());
-  HTML_OUTPUT.innerHTML = snapshot.val();
+  var dbData = snapshot.val();
+  if (dbData == null) { // if there is no data, dbData will be null.
+    console.log('There was no record when trying to read the message');
+  } else {
+    console.log("Running displayRead(), the name of 02 is: " + snapshot.val());
+    HTML_OUTPUT.innerHTML = snapshot.val();
+  };
 }
+
+
+/**************************************************************/
+// fb_readListener()
+// Demonstrate a listen to firebase
+// This function triggers when your database changes
+/**************************************************************/
+function fb_readListener() {
+  console.log("Read Listener");
+  firebase.database().ref('/users/02/name').on('value', fb_logDatabaseRead, fb_readError);
+}
+
 
 /**************************************************************/
 // goodbyeWorld()
