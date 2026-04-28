@@ -17,6 +17,8 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 // The ref('/') part tells the operation to write to the base level of the database "/"
 // This means it replaces the whole database with message:Hello World
 /**************************************************************/
+let specialName = someone;
+
 function simpleWrite(){
   console.log("Running simpleWrite()");
   //Creating data from '/' (roots) then in 'users: 01...' adding data
@@ -29,7 +31,7 @@ function simpleWrite(){
   );
   firebase.database().ref('/users/02').set(
     {
-      name: 'jack',
+      name: specialName,
       age: 4,
       hair: 'null'
     }
