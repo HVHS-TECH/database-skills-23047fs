@@ -70,10 +70,9 @@ function displayRead(snapshot) {
   };
 }
 
-
 /**************************************************************/
 // fb_readListener()
-// Demonstrate a listen to firebase
+// Demonstrate a listener to firebase
 // This function triggers when your database changes
 /**************************************************************/
 function fb_readListener() {
