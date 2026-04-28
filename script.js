@@ -17,7 +17,7 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 // The ref('/') part tells the operation to write to the base level of the database "/"
 // This means it replaces the whole database with message:Hello World
 /**************************************************************/
-let specialName = someone;
+let specialName = "someone";
 
 function simpleWrite(){
   console.log("Running simpleWrite()");
