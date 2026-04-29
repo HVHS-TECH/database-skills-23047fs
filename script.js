@@ -16,15 +16,15 @@ let userTable = {
   users: {
     1: {
       name: 'ben',
-      age: 102
+      score: 102
     },
     2: {
       name: 'james',
-      age: 4
+      score: 4
     },
     3: {
       name: 'jo',
-      age: 52
+      score: 52
     }
   }
 };
@@ -49,8 +49,8 @@ function simpleWrite(){
 /**************************************************************/
 function simpleSafeRead() {
   console.log("Reading simpleSafeRead()");
-  //Reading from '' then doing function displayRead
-  firebase.database().ref('/users/2/name').once('value', displayRead, fb_readError);
+  //Reading from '/users/2/score' then doing function displayRead
+  firebase.database().ref('/users/2/score').once('value', displayRead, fb_readError);
   console.log("Leaving simpleSafeRead()");
 }
 
@@ -64,7 +64,7 @@ function displayRead(snapshot) {
   if (dbData == null) { // if there is no data, dbData will be null.
     console.log('There was no record when trying to read the message');
   } else {
-    console.log("Running displayRead(), the name of 02 is: " + snapshot.val());
+    console.log("Running displayRead(), the score of 2 is: " + snapshot.val());
     HTML_OUTPUT.innerHTML = snapshot.val();
   };
 }
@@ -76,7 +76,7 @@ function displayRead(snapshot) {
 /**************************************************************/
 function simpleChange() {
   console.log("Running simpleChange()");
-  firebase.database().ref('/users/2/name').set('mike');
+  firebase.database().ref('/users/2/score').set(1000);
   console.log("Leaving simpleChange()");
 }
 
@@ -90,7 +90,7 @@ function simpleAdd() {
   firebase.database().ref('/users/4').set( 
     {
       name: 'jkae',
-      age: 12
+      score: 12
     }
   );  
   console.log("Leaving simpleChange()");
@@ -103,6 +103,17 @@ function simpleAdd() {
 /**************************************************************/
 function readListener() {
   console.log("Reading readListener()");
-  firebase.database().ref('/users/2/name').on('value', displayRead);
+  firebase.database().ref('/users/2/score').on('value', displayRead);
   console.log("Leaving Listener()");
+}
+
+/**************************************************************/
+// readScores()
+// Demonstrate a complex read to firebase
+// This function reads the scores of users
+/**************************************************************/
+function readScores() {
+  console.log("Reading readScores()");
+  firebase.database().ref('/users').once('value', displayRead, fb_readError);
+  console.log("Leaving readScores()");
 }
