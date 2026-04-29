@@ -117,3 +117,18 @@ function readScores() {
   firebase.database().ref('/users').once('value', displayRead, fb_readError);
   console.log("Leaving readScores()");
 }
+
+/**************************************************************/
+// displayScoreRead()
+// Demonstrate a minimal read to firebase
+// This function reads a message then tells user in console
+/**************************************************************/
+function displayScoreRead(snapshot) {
+  var dbData = snapshot.val();
+  if (dbData == null) { // if there is no data, dbData will be null.
+    console.log('There was no record when trying to read the message');
+  } else {
+    console.log("Running displayScoreRead(), users: " + snapshot.val());
+    HTML_OUTPUT.innerHTML = snapshot.val();
+  };
+}
