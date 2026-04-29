@@ -18,12 +18,3 @@ function fb_readError(error) {
     console.error(error);
 }
 
-/**************************************************************/
-// fb_readError()
-// Demonstrate a listener read in firebase
-// This function is called if listener called and does a console.log
-/**************************************************************/
-function fb_logDatabaseRead() {
-    console.log("There was a change");
-}
-

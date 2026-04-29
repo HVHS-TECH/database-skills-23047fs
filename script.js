@@ -9,52 +9,49 @@
 const HTML_OUTPUT = document.getElementById("databaseOutput");
 
 /**************************************************************/
-// helloWorld()
-// Demonstrate a minimal write to firebase
-// This function replaces the entire database with the message "Hello World"
-// 
-// This uses the set() operation to write the key:value pair "message":"Hello World"
-// The ref('/') part tells the operation to write to the base level of the database "/"
-// This means it replaces the whole database with message:Hello World
+//Variables
 /**************************************************************/
-let specialName = "someone";
+//Users: names and scores
+let userTable = {
+  users: {
+    1: {
+      name: 'ben',
+      age: 102
+    },
+    2: {
+      name: 'james',
+      age: 4
+    },
+    3: {
+      name: 'jo',
+      age: 52
+    }
+  }
+};
 
+/**************************************************************/
+// simpleWrite()
+// Demonstrate a minimal write to firebase
+// This function replaces the entire database with the userTable
+// 
+// The ref('/') part tells the operation to write to the base level of the database "/"
+/**************************************************************/
 function simpleWrite(){
   console.log("Running simpleWrite()");
-  //Creating data from '/' (roots) then in 'users: 01...' adding data
-  firebase.database().ref('/users/01').set(
-    {
-      name: 'ben',
-      age: 102,
-      hair: 'yellow'
-    }
-  );
-  firebase.database().ref('/users/02').set(
-    {
-      name: specialName,
-      age: 4,
-      hair: 'null'
-    }
-  );
-  firebase.database().ref('/users/03').set(
-    {
-      name: 'jo',
-      age: 52,
-      hair: 'black'
-    }
-  );
+  firebase.database().ref('/').set(userTable);
+  console.log("Leaving simpleWrite()");
 }
 
 /**************************************************************/
-// simpleRead()
+// simpleSafeRead()
 // Demonstrate a minimal read to firebase
 // This function reads a message
 /**************************************************************/
-function simpleRead() {
-  console.log("Reading message");
+function simpleSafeRead() {
+  console.log("Reading simpleSafeRead()");
   //Reading from '' then doing function displayRead
-  firebase.database().ref('/users/02/name').once('value', displayRead, fb_readError);
-  console.log("Leaving simpleRead");
+  firebase.database().ref('/users/2/name').once('value', displayRead, fb_readError);
+  console.log("Leaving simpleSafeRead()");
 }
 
 /**************************************************************/
@@ -73,26 +70,39 @@ function displayRead(snapshot) {
 }
 
 /**************************************************************/
-// fb_readListener()
+// simpleChange()
+// Demonstrate a minimal change to firebase
+// This function changes the name of user 2
+/**************************************************************/
+function simpleChange() {
+  console.log("Running simpleChange()");
+  firebase.database().ref('/users/2/name').set('mike');
+  console.log("Leaving simpleChange()");
+}
+
+/**************************************************************/
+// simpleAdd()
+// Demonstrate a minimal add to firebase
+// This function adds user 4
+/**************************************************************/
+function simpleAdd() {
+  console.log("Running simpleChange()");
+  firebase.database().ref('/users/4').set( 
+    {
+      name: 'jkae',
+      age: 12
+    }
+  );  
+  console.log("Leaving simpleChange()");
+}
+
+/**************************************************************/
+// readListener()
 // Demonstrate a listener to firebase
 // This function triggers when your database changes
 /**************************************************************/
-function fb_readListener() {
-  console.log("Read Listener");
-  firebase.database().ref('/users/02/name').on('value', fb_logDatabaseRead, fb_readError);
-}
-
-
-/**************************************************************/
-// goodbyeWorld()
-// Demonstrate a minimal write to firebase
-// This function replaces the entire database with the message "Goodbye World"
-/**************************************************************/
-function goodbyeWorld(){
-  console.log("Running helloWorld()")
-  firebase.database().ref('/').set(
-    {
-      message: 'Goodbye World!'
-    }
-  )
+function readListener() {
+  console.log("Reading readListener()");
+  firebase.database().ref('/users/2/name').on('value', displayRead);
+  console.log("Leaving Listener()");
 }
