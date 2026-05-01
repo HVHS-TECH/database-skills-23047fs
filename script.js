@@ -14,15 +14,15 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 //Users: names and scores
 let userTable = {
   users: {
-    1: {
+    a: {
       name: 'ben',
       score: 102
     },
-    2: {
+    b: {
       name: 'james',
       score: 4
     },
-    3: {
+    c: {
       name: 'jo',
       score: 52
     }
@@ -50,7 +50,7 @@ function simpleWrite(){
 function simpleSafeRead() {
   console.log("Reading simpleSafeRead()");
   //Reading from '/users/2/score' then doing function displayRead
-  firebase.database().ref('/users/2/score').once('value', displayRead, fb_readError);
+  firebase.database().ref('/users/b/score').once('value', displayRead, fb_readError);
   console.log("Leaving simpleSafeRead()");
 }
 
@@ -64,7 +64,7 @@ function displayRead(snapshot) {
   if (dbData == null) { // if there is no data, dbData will be null.
     console.log('There was no record when trying to read the message');
   } else {
-    console.log("Running displayRead(), the score of 2 is: " + snapshot.val());
+    console.log("Running displayRead(), the score of b is: " + snapshot.val());
     HTML_OUTPUT.innerHTML = snapshot.val();
   };
 }
@@ -76,7 +76,7 @@ function displayRead(snapshot) {
 /**************************************************************/
 function simpleChange() {
   console.log("Running simpleChange()");
-  firebase.database().ref('/users/2/score').set(1000);
+  firebase.database().ref('/users/b/score').set(1000);
   console.log("Leaving simpleChange()");
 }
 
@@ -87,12 +87,14 @@ function simpleChange() {
 /**************************************************************/
 function simpleAdd() {
   console.log("Running simpleChange()");
-  firebase.database().ref('/users/4').set( 
+  firebase.database().ref('/users/d').set( 
     {
       name: 'jkae',
       score: 12
     }
   );  
+  //Add one to the total of users
+  numberOfUsers = numberOfUsers + 1;
   console.log("Leaving simpleChange()");
 }
 
@@ -103,7 +105,7 @@ function simpleAdd() {
 /**************************************************************/
 function readListener() {
   console.log("Reading readListener()");
-  firebase.database().ref('/users/2/score').on('value', displayRead);
+  firebase.database().ref('/users/b/score').on('value', displayRead, fb_readError);
   console.log("Leaving Listener()");
 }
 
@@ -114,21 +116,27 @@ function readListener() {
 /**************************************************************/
 function readScores() {
   console.log("Reading readScores()");
-  firebase.database().ref('/users').once('value', displayRead, fb_readError);
+  firebase.database().ref('/users').once('value', displayScoreRead, fb_readError);
   console.log("Leaving readScores()");
 }
-
 /**************************************************************/
 // displayScoreRead()
-// Demonstrate a minimal read to firebase
-// This function reads a message then tells user in console
+// Demonstrate a read to firebase
+// This function reads the scores of users then tells user in console
 /**************************************************************/
-function displayScoreRead(snapshot) {
-  var dbData = snapshot.val();
+  var dbData
+  function displayScoreRead(snapshot) {
+ dbData= snapshot.val();
   if (dbData == null) { // if there is no data, dbData will be null.
     console.log('There was no record when trying to read the message');
   } else {
-    console.log("Running displayScoreRead(), users: " + snapshot.val());
-    HTML_OUTPUT.innerHTML = snapshot.val();
+    console.log(dbData)
+    let names = Object.keys(dbData);
+    for (i = 0; i < names.length; i++) {
+      let key = names[i];
+      let score = dbData[key].score;
+      console.log(i + " " + key + " " + score);
+    };
+    HTML_OUTPUT.innerHTML = dbData;
   };
 }
