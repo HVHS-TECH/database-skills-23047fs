@@ -162,5 +162,5 @@ function displayOrderedScoreRead(snapshot) {
 }
 
 function displayOrderedScoreRead(child) {
-  console.log(child.key+" got "+child.val()+" points");
+  console.log(child.key + " got " + child.val() + " points");
 }
