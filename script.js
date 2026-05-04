@@ -125,8 +125,6 @@ function readScores() {
 /**************************************************************/
 var dbData
 function displayScoreRead(snapshot) {
-  //Array for user display
-  let displayScores = [];
   dbData= snapshot.val();
   if (dbData == null) { // if there is no data, dbData will be null.
     console.log('There was no record when trying to read the message');
@@ -137,9 +135,32 @@ function displayScoreRead(snapshot) {
       let user = usersKey[i];
       let score = dbData[user].score;
       let userName = dbData[user].name;
-      displayScores.push(user + " " + userName + " " + score + "<br>"); 
+      HTML_OUTPUT.innerHTML += user + " " + userName + " " + score + "<br>"
       console.log(i + " " + user + " " + userName + " " + score);
     };
-    HTML_OUTPUT.innerHTML = displayScores;
   };
+}
+
+/**************************************************************/
+// readOrderedScores()
+// Demonstrate a complex ordered read to firebase
+// This function reads the scores of users in order
+/**************************************************************/
+function readOrderedScores() {
+  console.log("Reading readOrderedScores()");
+  firebase.database().ref('/users').orderByValue().once('value', displayOrderedScoreRead, fb_readError);
+  console.log("Leaving readOrderedScores()");
+}
+
+/**************************************************************/
+// displayOrderedScoreRead()
+// Demonstrate a read to firebase
+// This function reads the scores of users in order then tells user in console
+/**************************************************************/
+function displayOrderedScoreRead(snapshot) {
+  snapshot.forEach(showOneScore);
+}
+
+function displayOrderedScoreRead(child) {
+  console.log(child.key+" got "+child.val()+" points");
 }
