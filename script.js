@@ -94,7 +94,6 @@ function simpleAdd() {
     }
   );  
   //Add one to the total of users
-  numberOfUsers = numberOfUsers + 1;
   console.log("Leaving simpleChange()");
 }
 
@@ -124,19 +123,23 @@ function readScores() {
 // Demonstrate a read to firebase
 // This function reads the scores of users then tells user in console
 /**************************************************************/
-  var dbData
-  function displayScoreRead(snapshot) {
- dbData= snapshot.val();
+var dbData
+function displayScoreRead(snapshot) {
+  //Array for user display
+  let displayScores = [];
+  dbData= snapshot.val();
   if (dbData == null) { // if there is no data, dbData will be null.
     console.log('There was no record when trying to read the message');
   } else {
-    console.log(dbData)
-    let names = Object.keys(dbData);
-    for (i = 0; i < names.length; i++) {
-      let key = names[i];
-      let score = dbData[key].score;
-      console.log(i + " " + key + " " + score);
+    console.log(dbData);
+    let usersKey = Object.keys(dbData);
+    for (i = 0; i < usersKey.length; i++) {
+      let user = usersKey[i];
+      let score = dbData[user].score;
+      let userName = dbData[user].name;
+      displayScores.push(user + " " + userName + " " + score + "<br>"); 
+      console.log(i + " " + user + " " + userName + " " + score);
     };
-    HTML_OUTPUT.innerHTML = dbData;
+    HTML_OUTPUT.innerHTML = displayScores;
   };
 }
