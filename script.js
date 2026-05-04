@@ -158,7 +158,7 @@ function readOrderedScores() {
 // This function reads the scores of users in order then tells user in console
 /**************************************************************/
 function displayOrderedScoreRead(snapshot) {
-  snapshot.forEach(showOneScore);
+  snapshot.forEach(showOneScore); 
 }
 
 function displayOrderedScoreRead(child) {
