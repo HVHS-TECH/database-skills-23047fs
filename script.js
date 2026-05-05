@@ -16,15 +16,15 @@ let userTable = {
   users: {
     a: {
       name: 'ben',
-      score: 102
+      score: -102
     },
     b: {
       name: 'james',
-      score: 4
+      score: -4
     },
     c: {
       name: 'jo',
-      score: 52
+      score: -52
     }
   }
 };
@@ -133,8 +133,8 @@ function displayScoreRead(snapshot) {
     let usersKey = Object.keys(dbData);
     for (i = 0; i < usersKey.length; i++) {
       let user = usersKey[i];
-      let score = dbData[user].score;
-      let userName = dbData[user].name;
+      let score = dbData[user]["score"];
+      let userName = dbData[user]["name"];
       HTML_OUTPUT.innerHTML += user + " " + userName + " " + score + "<br>"
       console.log(i + " " + user + " " + userName + " " + score);
     };
@@ -148,7 +148,7 @@ function displayScoreRead(snapshot) {
 /**************************************************************/
 function readOrderedScores() {
   console.log("Reading readOrderedScores()");
-  firebase.database().ref('/users').orderByValue().once('value', displayOrderedScoreRead, fb_readError);
+  firebase.database().ref('/users').orderByChild("score").limitToLast(3).once('value', displayOrderedScoreRead, fb_readError);
   console.log("Leaving readOrderedScores()");
 }
 
@@ -160,7 +160,36 @@ function readOrderedScores() {
 function displayOrderedScoreRead(snapshot) {
   snapshot.forEach(showOneScore); 
 }
+function showOneScore(child) {
+  console.log(child.key + " " + child.val()["name"] + " " + child.val()["score"]);
+  HTML_OUTPUT.innerHTML += child.key + " " + child.val()["name"] + " " + Math.abs(child.val()["score"]) + "<br>"
+}
 
-function displayOrderedScoreRead(child) {
-  console.log(orderByChild("score").key + " got " + orderByChild("score").val() + " points");
+/**************************************************************/
+// fb_login()
+// Checks if user is authenticated
+// This function checks if is signed into google
+/**************************************************************/
+function fb_login() {
+  console.log("Logging in");
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      console.log("Logged in");
+      console.log(user);
+      //User signed in
+      let uid = user.uid;
+      //...
+    } else {
+      console.log("Not logged in");
+      //User is signed out
+      //Using a popup
+      let provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider).then(function(result) {
+        //This gives you a Google Access Token
+        let token = result.credential.accessToken;
+        //The signed in user info
+        let user = result.user;
+      })
+    }
+  });
 }
