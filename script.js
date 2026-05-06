@@ -90,7 +90,7 @@ function simpleAdd() {
   firebase.database().ref('/users/d').set( 
     {
       name: 'jkae',
-      score: 12
+      score: -12
     }
   );  
   //Add one to the total of users
@@ -178,7 +178,13 @@ function fb_login() {
       console.log(user);
       //User signed in
       let uid = user.uid;
-      //...
+      //Add a new user, 
+      firebase.database().ref('/users/'+uid).set(
+        {
+          name: '',
+          score: 0
+        }
+      );
     } else {
       console.log("Not logged in");
       //User is signed out
