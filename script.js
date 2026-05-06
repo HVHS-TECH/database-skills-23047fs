@@ -199,3 +199,12 @@ function fb_login() {
     }
   });
 }
+
+let GLOBAL_user;
+
+function login() {
+  authenticatorListner = firebase.auth().onAuthStateChanged(handleLogin)
+}
+function handleLogin(_user) {
+
+}
