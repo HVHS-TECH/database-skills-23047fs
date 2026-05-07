@@ -203,8 +203,26 @@ function fb_login() {
 let GLOBAL_user;
 
 function login() {
-  authenticatorListner = firebase.auth().onAuthStateChanged(handleLogin)
+  authenticationListner = firebase.auth().onAuthStateChanged(handleLogin)
 }
 function handleLogin(_user) {
+  if (_user) {
+    GLOBAL_user = _user; //Save user details into global variable
+    console.log(GLOBAL_user);
+  } else {
+    popupLogin();
+  }
+}
 
+function popupLogin() {
+  let provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider).then((result) => {
+    GLOBAL_user = result.user;
+    console.log(GLOBAL_user);
+  });
+}
+
+function logout() {
+  authenticationListner();
+  firebase.auth().signOut();
 }
