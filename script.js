@@ -38,7 +38,7 @@ let userTable = {
 /**************************************************************/
 function simpleWrite(){
   console.log("Running simpleWrite()");
-  firebase.database().ref('/').set(userTable);
+  firebase.database().ref('/test/').set(userTable);
   console.log("Leaving simpleWrite()");
 }
 
@@ -50,7 +50,7 @@ function simpleWrite(){
 function simpleSafeRead() {
   console.log("Reading simpleSafeRead()");
   //Reading from '/users/2/score' then doing function displayRead
-  firebase.database().ref('/users/b/score').once('value', displayRead, fb_readError);
+  firebase.database().ref('/test/users/b/score').once('value', displayRead, fb_readError);
   console.log("Leaving simpleSafeRead()");
 }
 
@@ -76,7 +76,7 @@ function displayRead(snapshot) {
 /**************************************************************/
 function simpleChange() {
   console.log("Running simpleChange()");
-  firebase.database().ref('/users/b/score').set(1000);
+  firebase.database().ref('/test/users/b/score/').set(1000);
   console.log("Leaving simpleChange()");
 }
 
@@ -87,7 +87,7 @@ function simpleChange() {
 /**************************************************************/
 function simpleAdd() {
   console.log("Running simpleChange()");
-  firebase.database().ref('/users/d').set( 
+  firebase.database().ref('/test/users/d/').set( 
     {
       name: 'jkae',
       score: -12
@@ -104,7 +104,7 @@ function simpleAdd() {
 /**************************************************************/
 function readListener() {
   console.log("Reading readListener()");
-  firebase.database().ref('/users/b/score').on('value', displayRead, fb_readError);
+  firebase.database().ref('/test/users/b/score/').on('value', displayRead, fb_readError);
   console.log("Leaving Listener()");
 }
 
@@ -115,7 +115,7 @@ function readListener() {
 /**************************************************************/
 function readScores() {
   console.log("Reading readScores()");
-  firebase.database().ref('/users').once('value', displayScoreRead, fb_readError);
+  firebase.database().ref('/test/users/').once('value', displayScoreRead, fb_readError);
   console.log("Leaving readScores()");
 }
 /**************************************************************/
@@ -148,7 +148,7 @@ function displayScoreRead(snapshot) {
 /**************************************************************/
 function readOrderedScores() {
   console.log("Reading readOrderedScores()");
-  firebase.database().ref('/users').orderByChild("score").limitToLast(3).once('value', displayOrderedScoreRead, fb_readError);
+  firebase.database().ref('/test/users/').orderByChild("score").limitToLast(3).once('value', displayOrderedScoreRead, fb_readError);
   console.log("Leaving readOrderedScores()");
 }
 
@@ -179,7 +179,7 @@ function fb_login() {
       //User signed in
       let uid = user.uid;
       //Add a new user, 
-      firebase.database().ref('/users/'+uid).set(
+      firebase.database().ref('/test/users/'+uid).set(
         {
           name: '',
           score: 0
